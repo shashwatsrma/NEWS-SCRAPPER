@@ -71,7 +71,7 @@ def extract_article(url):
 # ---------------- BATCH RUN ----------------
 
 def run_batch():
-    with open("republicaurls.txt") as f:
+    with open("republica/republicaurls.txt") as f:
         urls = [u.strip() for u in f if u.strip()]
 
     with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as csvfile:
