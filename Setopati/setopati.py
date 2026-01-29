@@ -5,7 +5,7 @@ import re
 from bs4 import BeautifulSoup
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-OUTPUT_FILE = "setopati.csv"
+OUTPUT_FILE = "setopati/setopati.csv"
 
 # ---------------- HELPERS ----------------
 
