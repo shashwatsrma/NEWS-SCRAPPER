@@ -67,7 +67,7 @@ def extract_article(url):
 # ---------------- BATCH RUN ----------------
 
 def run_batch():
-    with open("urls.txt") as f:
+    with open("onlinekhabar/okurls.txt") as f:
         urls = [u.strip() for u in f if u.strip()]
 
     with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as csvfile:
