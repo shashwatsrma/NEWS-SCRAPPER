@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 OUTPUT_FILE = "republica/republica.csv"
 START_LINE = 1   # ← change this to whatever line you want
-END_LINE = 10  # ← change this to whatever line you want
+END_LINE = 100  # ← change this to whatever line you want
 
 # ---------------- HELPERS ----------------
 
