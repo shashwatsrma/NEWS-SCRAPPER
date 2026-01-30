@@ -3,10 +3,12 @@ import csv
 import time
 import re
 from bs4 import BeautifulSoup
+import os
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 OUTPUT_FILE = "setopati/setopati.csv"
-
+START_LINE = 1   # ← change this to whatever line you want
+END_LINE = 10  # ← change this to whatever line you want
 # ---------------- HELPERS ----------------
 
 def clean_text(text):
@@ -71,15 +73,21 @@ def extract_article(url):
 
 def run_batch():
     with open("setopati/setopatiurls.txt") as f:
-        urls = [u.strip() for u in f if u.strip()]
-
-    with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as csvfile:
+     urls = [
+        u.strip()
+        for idx, u in enumerate(f, start=1)
+        if START_LINE <= idx <= END_LINE and u.strip()
+    ]
+    file_exists = os.path.isfile(OUTPUT_FILE)
+    with open(OUTPUT_FILE, "a", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(
-            ["ID", "CATEGORY", "LINK", "TITLE", "BODY", "SOURCE", "DATE"]
-        )
 
-        for i, url in enumerate(urls, start=1):
+        if not file_exists:
+            writer.writerow(
+                ["ID", "CATEGORY", "LINK", "TITLE", "BODY", "SOURCE", "DATE"]
+            )
+
+        for i, url in enumerate(urls, start=START_LINE):
             try:
                 data = extract_article(url)
                 if not data:
