@@ -120,7 +120,6 @@ def run_batch():
 
         for url in urls:
             if url in existing_urls:  # skip already scraped URLs
-                print(f"[SKIP] Already exists:")
                 continue
 
             try:
