@@ -99,25 +99,38 @@ def run_batch():
             if START_LINE <= idx <= END_LINE and u.strip()
         ]
 
-    file_exists = os.path.isfile(OUTPUT_FILE)
+    # ------------------ GET LAST ID ------------------
+    last_id = 0
+    existing_urls = set()
+    if os.path.isfile(OUTPUT_FILE):
+        with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                last_id = max(last_id, int(row["ID"]))
+                existing_urls.add(row["LINK"])  # prevent duplicates
 
     with open(OUTPUT_FILE, "a", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
 
         # ✅ write header ONLY if file does not exist
-        if not file_exists:
+        if last_id == 0:
             writer.writerow(
                 ["ID", "CATEGORY", "LINK", "TITLE", "BODY", "SOURCE", "DATE"]
             )
 
-        for i, url in enumerate(urls, start=START_LINE):
+        for url in urls:
+            if url in existing_urls:  # skip already scraped URLs
+                print(f"[SKIP] Already exists:")
+                continue
+
             try:
                 data = extract_article(url)
                 if not data:
                     continue
 
+                last_id += 1  # increment ID
                 writer.writerow([
-                    i,
+                    last_id,
                     data["CATEGORY"],
                     url,
                     data["TITLE"],
@@ -126,12 +139,13 @@ def run_batch():
                     data["DATE"]
                 ])
 
-                print(f"[OK] {i}: {url}")
+                print(f"[OK] {last_id}: {url}")
                 time.sleep(2)
 
             except Exception as e:
                 print(f"[FAIL] {url} → {e}")
                 time.sleep(5)
+
 
 
 if __name__ == "__main__":
