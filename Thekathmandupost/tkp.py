@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 import os
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-OUTPUT_FILE = "tkp.csv"
-START_LINE = 11
-END_LINE = 15
-INPUT_FILE = "tkpurls.txt"
+OUTPUT_FILE = "TheKathmanduPost/tkp.csv"
+START_LINE = 1
+END_LINE = 5
+INPUT_FILE = "TheKathmanduPost/tkpurls.txt"
 # ---------------- HELPERS ----------------
 
 def clean_text(text):
