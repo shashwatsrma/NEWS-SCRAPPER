@@ -8,7 +8,7 @@ import os
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 OUTPUT_FILE = "TheKathmanduPost/tkp.csv"
 START_LINE = 1
-END_LINE = 5
+END_LINE = 10
 INPUT_FILE = "TheKathmanduPost/tkpurls.txt"
 # ---------------- HELPERS ----------------
 
@@ -42,9 +42,16 @@ def extract_kathmandupost(url):
         requests.get(url, headers=HEADERS, timeout=15).text, "lxml"
     )
 
-    # Title (same style as OK, minimal handling)
-    title_tag = soup.find("h1")
-    title = title_tag.text.strip() if title_tag else ""
+    # Heading
+    heading_tag = soup.select_one("div.col-sm-8 h1")
+    heading = heading_tag.text.strip() if heading_tag else ""
+
+    # Subheading
+    sub_tag = soup.select_one("div.col-sm-8 span.title-sub")
+    subheading = sub_tag.text.strip() if sub_tag else ""
+
+    # Combine heading + subheading
+    title = f"{heading}: {subheading}" if subheading else heading
 
     # Category
     cat_tag = soup.select_one("h4.title--line__red a")
