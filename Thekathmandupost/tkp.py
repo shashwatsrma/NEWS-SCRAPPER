@@ -112,7 +112,7 @@ def run_batch():
     with open(OUTPUT_FILE, "a", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
 
-        # ✅ write header ONLY if file does not exist
+        # write header ONLY if file does not exist
         if last_id == 0:
             writer.writerow(
                 ["ID", "CATEGORY", "LINK", "TITLE", "BODY", "SOURCE", "DATE"]

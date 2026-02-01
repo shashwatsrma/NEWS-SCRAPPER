@@ -23,8 +23,7 @@ def remove_dateline(text):
 # ---------------- ONLINEKHABAR ----------------
 
 def extract_onlinekhabar(url):
-    soup = BeautifulSoup(
-        requests.get(url, headers=HEADERS, timeout=15).text, "lxml"
+    soup = BeautifulSoup(requests.get(url, headers=HEADERS, timeout=15).text, "lxml"
     )
 
     # Title
