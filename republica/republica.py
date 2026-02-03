@@ -55,7 +55,7 @@ def extract_republica(url):
                 txt = remove_dateline(txt)  # remove leading dateline
                 paragraphs.append(txt)
 
-    full_body = "\n\n".join(paragraphs)
+    full_body = "\n".join(paragraphs)
 
     return {
         "CATEGORY": category,

@@ -71,11 +71,11 @@ def extract_kathmandupost(url):
             txt = clean_text(p.get_text())
             if len(txt) > 40:
                 paragraphs.append(txt)
-
+    body = "\n".join(paragraphs)
     return {
         "CATEGORY": category,
         "TITLE": title,
-        "BODY": "\n\n".join(paragraphs),
+        "BODY": body,
         "SOURCE": "Kathmandu Post",
         "DATE": date,
     }

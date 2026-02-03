@@ -42,7 +42,7 @@ def extract_onlinekhabar(url):
                 # remove dateline like "Kathmandu, January 28"
                 txt = re.sub(r'^[A-Z][a-z]+,\s+[A-Za-z]+\s+\d{1,2}', '', txt)
                 paragraphs.append(txt)
-    body = "\n\n".join(paragraphs)
+    body = "\n".join(paragraphs)
 
     
     return {
