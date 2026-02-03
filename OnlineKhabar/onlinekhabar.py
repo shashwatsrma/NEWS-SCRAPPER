@@ -39,8 +39,6 @@ def extract_onlinekhabar(url):
         for p in content.find_all("p"):
             txt = clean_text(p.get_text())
             if len(txt) > 40:
-                # remove dateline like "Kathmandu, January 28"
-                txt = re.sub(r'^[A-Z][a-z]+,\s+[A-Za-z]+\s+\d{1,2}', '', txt)
                 paragraphs.append(txt)
     body = "\n".join(paragraphs)
 
