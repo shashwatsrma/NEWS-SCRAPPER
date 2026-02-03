@@ -7,8 +7,8 @@ import os
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 OUTPUT_FILE = "Onlinekhabar/Onlinekhabar.csv"
-START_LINE = 11   # ← change this to whatever line you want
-END_LINE = 15  # ← change this to whatever line you want
+START_LINE = 1   # ← change this to whatever line you want
+END_LINE = 10  # ← change this to whatever line you want
 # ---------------- HELPERS ----------------
 
 def clean_text(text):
@@ -72,7 +72,7 @@ def run_batch():
     ]
     file_exists = os.path.isfile(OUTPUT_FILE)
 
-    with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as csvfile:
+    with open(OUTPUT_FILE, "a", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
         if not file_exists:
             writer.writerow(
