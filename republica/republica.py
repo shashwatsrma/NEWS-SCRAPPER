@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 OUTPUT_FILE = "republica/republica.csv"
+INPUT_FILE = "republica/republicaurls.txt"
 START_LINE = 1   # ← change this to whatever line you want
 END_LINE = 100  # ← change this to whatever line you want
 
@@ -74,7 +75,7 @@ def extract_article(url):
 # ---------------- BATCH RUN ----------------
 
 def run_batch():
-    with open("republica/republicaurls.txt") as f:
+    with open(INPUT_FILE) as f:
        urls = [
         u.strip()
         for idx, u in enumerate(f, start=1)

@@ -7,6 +7,7 @@ import os
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 OUTPUT_FILE = "setopati/setopati.csv"
+INPUT_FILE= "setopati/setopatiurls.txt"
 START_LINE = 1   # ← change this to whatever line you want
 END_LINE = 10  # ← change this to whatever line you want
 # ---------------- HELPERS ----------------
@@ -46,7 +47,7 @@ def extract_setopati(url):
             if len(txt) > 40:
                 paragraphs.append(txt)
     body = "\n".join(paragraphs)
-    
+
     return {
         "CATEGORY": category,
         "TITLE": title,
@@ -67,7 +68,7 @@ def extract_article(url):
 # ---------------- BATCH RUN ----------------
 
 def run_batch():
-    with open("setopati/setopatiurls.txt") as f:
+    with open(INPUT_FILE) as f:
      urls = [
         u.strip()
         for idx, u in enumerate(f, start=1)
