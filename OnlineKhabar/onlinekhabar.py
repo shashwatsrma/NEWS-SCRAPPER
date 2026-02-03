@@ -7,18 +7,12 @@ import os
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 OUTPUT_FILE = "Onlinekhabar/Onlinekhabar.csv"
-START_LINE = 1   # ← change this to whatever line you want
-END_LINE = 10  # ← change this to whatever line you want
+START_LINE = 11   # ← change this to whatever line you want
+END_LINE = 15  # ← change this to whatever line you want
 # ---------------- HELPERS ----------------
 
 def clean_text(text):
     return " ".join(text.split())
-
-def remove_dateline(text):
-    # Remove leading dateline like "KATHMANDU, Jan 12:" from Republica / OnlineKhabar
-    return re.sub(r'^[A-Z\s]+,\s+[A-Za-z]+\s+\d{1,2}:\s*', '', text)
-
-
 
 # ---------------- ONLINEKHABAR ----------------
 
@@ -48,11 +42,13 @@ def extract_onlinekhabar(url):
                 # remove dateline like "Kathmandu, January 28"
                 txt = re.sub(r'^[A-Z][a-z]+,\s+[A-Za-z]+\s+\d{1,2}', '', txt)
                 paragraphs.append(txt)
+    body = "\n\n".join(paragraphs)
 
+    
     return {
         "CATEGORY": category,
         "TITLE": title,
-        "BODY": "\n\n".join(paragraphs),
+        "BODY": body,
         "SOURCE": "OnlineKhabar",
         "DATE": date,
     }

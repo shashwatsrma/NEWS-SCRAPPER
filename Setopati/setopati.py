@@ -14,12 +14,6 @@ END_LINE = 10  # ← change this to whatever line you want
 def clean_text(text):
     return " ".join(text.split())
 
-def remove_dateline(text):
-    # Remove leading dateline like "KATHMANDU, Jan 12:" from Republica / OnlineKhabar
-    return re.sub(r'^[A-Z\s]+,\s+[A-Za-z]+\s+\d{1,2}:\s*', '', text)
-
-
-
 # ---------------- SETOPATI ----------------
 
 def extract_setopati(url):
