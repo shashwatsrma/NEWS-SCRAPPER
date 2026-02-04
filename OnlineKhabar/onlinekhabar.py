@@ -10,12 +10,12 @@ OUTPUT_FILE = "Onlinekhabar/Onlinekhabar.csv"
 INPUT_FILE = "OnlineKhabar/okurls.txt"
 START_LINE = 15   # ← change this to whatever line you want
 END_LINE = 20  # ← change this to whatever line you want
-# ---------------- HELPERS ----------------
+#HELPER FUNCTIONS
 
 def clean_text(text):
     return " ".join(text.split())
 
-# ---------------- ONLINEKHABAR ----------------
+#  ONLINEKHABAR 
 
 def extract_onlinekhabar(url):
     soup = BeautifulSoup(requests.get(url, headers=HEADERS, timeout=15).text, "lxml"
@@ -53,31 +53,40 @@ def extract_onlinekhabar(url):
     }
 
 
-# ---------------- ROUTER ----------------
+#  ROUTER 
 
 def extract_article(url):
     if "onlinekhabar.com" in url:
         return extract_onlinekhabar(url)
     return None
 
-# ---------------- BATCH RUN ----------------
+#  BATCH RUN 
 
 def run_batch():
     with open(INPUT_FILE) as f:
+        #creation of urls list of online khabar
         urls = [
         u.strip()
         for idx, u in enumerate(f, start=1)
         if START_LINE <= idx <= END_LINE and u.strip()
     ]
+    #checking if output file already exists
+    #returns TRUE if file exists else FALSE
     file_exists = os.path.isfile(OUTPUT_FILE)
 
+
+    #opeining output/csv file in append mode
     with open(OUTPUT_FILE, "a", newline="", encoding="utf-8") as csvfile:
+
+    #writing rows into csv file
         writer = csv.writer(csvfile)
+
+        #write header ONLY if file does not exist only once for the data set
         if not file_exists:
             writer.writerow(
             ["ID", "CATEGORY", "LINK", "TITLE", "BODY", "SOURCE", "DATE"]
         )
-
+        #loop over urls list with enumeration starting from START_LINE
         for i, url in enumerate(urls, start=START_LINE):
             try:
                 data = extract_article(url)
