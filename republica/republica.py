@@ -30,6 +30,7 @@ def extract_republica(url):
     # Category
     category_tag = soup.select_one("span.rep-body--small--sans.text-primary-blue")
     category = category_tag.text.strip() if category_tag else ""
+    final_category=category.split(",")[0].strip() if category else ""
 
     # Headline and subheading
     title_tag = soup.find("h1", class_="rep-headline--large")
@@ -37,10 +38,10 @@ def extract_republica(url):
 
     sub_title_tag = soup.find("div", class_="rep-body--large")
     sub_title = sub_title_tag.text.strip() if sub_title_tag else ""
-    finalsubtitle=remove_dateline(sub_title)
+    final_subtitle=remove_dateline(sub_title)
 
     if sub_title:
-        title = f"{title}: {finalsubtitle}"  # combine title + subheading
+        title = f"{title}: {final_subtitle}"  # combine title + subheading
 
     # Date
     time_tag = soup.find("time", id="pub-date")
