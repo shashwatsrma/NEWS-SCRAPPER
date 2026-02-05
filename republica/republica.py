@@ -9,9 +9,9 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 OUTPUT_FILE = "republica/republica.csv"
 INPUT_FILE = "republica/republicaurls.txt"
 START_LINE = 1   # ← change this to whatever line you want
-END_LINE = 100  # ← change this to whatever line you want
+END_LINE = 10  # ← change this to whatever line you want
 
-# ---------------- HELPERS ----------------
+#  HELPER FUNCTIONS
 
 def clean_text(text):
     return " ".join(text.split())
@@ -20,7 +20,7 @@ def remove_dateline(text):
     # Remove leading dateline like "KATHMANDU, Jan 12:" from Republica / OnlineKhabar
     return re.sub(r'^[A-Z\s]+,\s+[A-Za-z]+\s+\d{1,2}:\s*', '', text)
 
-# ---------------- REPUBLICA ----------------
+# REPUBLICA
 
 def extract_republica(url):
     soup = BeautifulSoup(
@@ -37,9 +37,10 @@ def extract_republica(url):
 
     sub_title_tag = soup.find("div", class_="rep-body--large")
     sub_title = sub_title_tag.text.strip() if sub_title_tag else ""
+    finalsubtitle=remove_dateline(sub_title)
 
     if sub_title:
-        title = f"{title}: {sub_title}"  # combine title + subheading
+        title = f"{title}: {finalsubtitle}"  # combine title + subheading
 
     # Date
     time_tag = soup.find("time", id="pub-date")
@@ -52,8 +53,7 @@ def extract_republica(url):
     if content_div:
         for p in content_div.find_all("p"):
             txt = clean_text(p.get_text())
-            if len(txt) > 40:
-                txt = remove_dateline(txt)  # remove leading dateline
+            if txt:
                 paragraphs.append(txt)
 
     full_body = "\n".join(paragraphs)
@@ -63,16 +63,16 @@ def extract_republica(url):
         "TITLE": title,
         "BODY": full_body,
         "SOURCE": "Republica",
-        "DATE": date,
+        "DATE": " ",
     }
 
-# ---------------- ROUTER ----------------
+# ROUTER 
 
 def extract_article(url):
     if "myrepublica.nagariknetwork.com" in url:
         return extract_republica(url)
 
-# ---------------- BATCH RUN ----------------
+#  BATCH RUN 
 
 def run_batch():
     with open(INPUT_FILE) as f:
@@ -83,7 +83,7 @@ def run_batch():
     ]
     file_exists = os.path.isfile(OUTPUT_FILE)
     
-    with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as csvfile:
+    with open(OUTPUT_FILE, "a", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
 
         if not file_exists:
