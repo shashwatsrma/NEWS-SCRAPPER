@@ -1,4 +1,5 @@
 import os
+from unicodedata import category
 import requests
 import csv
 import time
@@ -9,7 +10,7 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 OUTPUT_FILE = "republica/republica.csv"
 INPUT_FILE = "republica/republicaurls.txt"
 START_LINE = 1   # ← change this to whatever line you want
-END_LINE = 10  # ← change this to whatever line you want
+END_LINE = 5  # ← change this to whatever line you want
 
 #  HELPER FUNCTIONS
 
@@ -30,7 +31,11 @@ def extract_republica(url):
     # Category
     category_tag = soup.select_one("span.rep-body--small--sans.text-primary-blue")
     category = category_tag.text.strip() if category_tag else ""
-    final_category=category.split(",")[0].strip() if category else ""
+    #final_category=category.split(",")[0].strip()
+
+
+    #if category.upper() != "POLITICS":
+        #return None
 
     # Headline and subheading
     title_tag = soup.find("h1", class_="rep-headline--large")
